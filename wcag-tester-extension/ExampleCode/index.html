@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCAG Accessibility Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .box {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .bad-contrast {
+            color: lightgray;
+            background-color: white;
+            border: 2px solid red;
+        }
+        .good-contrast {
+            color: #000000;
+            background-color: #FFFFFF;
+            border: 2px solid green;
+        }
+        .bad-alt {
+            border: 2px solid red;
+        }
+        .good-alt {
+            border: 2px solid green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WCAG Accessibility Test Page</h1>
+        
+        <div class="section">
+            <h2>Color Contrast Issues</h2>
+            <p class="good-contrast box pass">Good contrast: Readable text</p>
+            <p class="bad-contrast box fail">Bad contrast: Hard to read</p>
+        </div>
+
+        <div class="section">
+            <h2>Alternative Text for Images</h2>
+            <img src="https://images.pexels.com/photos/1133957/pexels-photo-1133957.jpeg?auto=compress&cs=tinysrgb&w=800" class="bad-alt box fail" alt="">
+            <p class="fail">Missing alt text - Screen readers cannot describe this image.</p>
+            <img src="https://images.pexels.com/photos/36487/above-adventure-aerial-air.jpg?auto=compress&cs=tinysrgb&w=800" class="good-alt box pass" alt="A beautiful aerial view of mountains.">
+            <p class="pass">Alt text provided - Image is accessible.</p>
+        </div>
+
+        <div class="section">
+            <h2>Non-Text Content Labels</h2>
+            <button class="box fail">🔍</button>
+            <p class="fail">No ARIA label or title - Not accessible for screen readers.</p>
+            <button class="box pass" aria-label="Search">🔍</button>
+            <p class="pass">Properly labeled button.</p>
+        </div>
+
+        <div class="section">
+            <h2>Video Captions</h2>
+            <video width="320" height="240" controls class="box fail">
+                <source src="video.mp4" type="video/mp4">
+            </video>
+            <p class="fail">No captions - Inaccessible for deaf users.</p>
+            
+            <video width="320" height="240" controls class="box pass">
+                <source src="video.mp4" type="video/mp4">
+                <track src="captions.vtt" kind="captions" srclang="en" label="English">
+            </video>
+            <p class="pass">Captions available - Accessible video.</p>
+        </div>
+
+        <div class="section">
+            <h2>Keyboard Accessibility</h2>
+            <p class="fail">This element <span tabindex="-1">cannot be focused using the keyboard.</span></p>
+            <p class="pass">This element <span tabindex="0">is accessible via keyboard navigation.</span></p>
+        </div>
+
+        <div class="section">
+            <h2>Skip Link</h2>
+            <p class="fail">No skip link found - Keyboard users may struggle.</p>
+            <a href="#main" class="pass">Skip link provided.</a>
+        </div>
+
+        <div class="section">
+            <h2>Form Labels</h2>
+            <input type="text" placeholder="Enter your name" class="fail box">
+            <p class="fail">No label - Users may not know what to enter.</p>
+            <label for="name">Enter your name:</label>
+            <input type="text" id="name" class="pass box">
+        </div>
+
+        <div class="section">
+            <h2>Robust Features (ARIA & Compatibility)</h2>
+        
+            <!-- ARIA Role Example -->
+            <div role="banner" class="box pass">This banner uses <code>role="banner"</code> for semantic meaning.</div>
+        
+            <!-- ARIA live region -->
+            <div aria-live="polite" class="box pass">This section is a live region and updates politely.</div>
+        
+            <!-- ARIA Labelledby -->
+            <label id="desc-label">Your age:</label>
+            <input type="text" aria-labelledby="desc-label" class="box pass">
+        
+            <!-- ARIA Describedby -->
+            <label for="email">Email:</label>
+            <p id="email-help">We'll never share your email.</p>
+            <input type="email" id="email" aria-describedby="email-help" class="box pass">
+
+            <!--  FAIL: Missing ARIA Label on button --> 
+            <button class="box fail"></button> 
+            <p class="fail"> This button has no <code>aria-label</code> or accessible name.</p>
+            <div class="box fail"> This element has no ARIA role and may be misinterpreted by assistive tech.</div> 
+
+        </div>
+        
+    </div>
+</body>
+</html>

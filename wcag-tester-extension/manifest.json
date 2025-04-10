@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "WCAG 2.2 Accessibility Tester",
+  "version": "1.0",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],   
+  "action": {
+      "default_popup": "popup/popup.html",
+      "default_icon": {}
+  },
+  "background": {
+      "service_worker": "scripts/scanner.js"
+  }
+}
